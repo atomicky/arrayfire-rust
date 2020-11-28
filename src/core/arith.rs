@@ -378,13 +378,13 @@ pub trait Convertable {
 
 impl<T> Convertable for T
 where
-    T: Copy + HasAfEnum + ConstGenerator<OutType = T>,
+    T: Clone + HasAfEnum + ConstGenerator<OutType = T>,
     <T as ConstGenerator>::OutType: HasAfEnum,
 {
     type OutType = T;
 
     fn convert(&self) -> Array<Self::OutType> {
-        constant(*self, Dim4::new(&[1, 1, 1, 1]))
+        constant(self.clone(), Dim4::new(&[1, 1, 1, 1]))
     }
 }
 
